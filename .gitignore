@@ -24,7 +24,6 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
-*.log
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -35,11 +34,5 @@ sysinfo.txt
 
 # Builds
 *.apk
-The Day of Moon/Assets/Third/Plugins/Sirenix/Demos/Sample - RPG Editor.unitypackage.meta
-The Day of Moon/Assets/Third/Plugins/Sirenix/Demos/Editor Windows.unitypackage.meta
-The Day of Moon/Assets/Third/Plugins/Sirenix/Demos/Custom Drawers.unitypackage.meta
-The Day of Moon/Assets/Third/Plugins/Sirenix/Demos/Custom Attribute Processors.unitypackage.meta
-The Day of Moon/Assets/Third/Plugins/Sirenix/Demos/Attributes Overview.unitypackage.meta
-The Day of Moon/Assets/Third/Cinemachine/Timeline/LegacyTimelineAPI.unitypackage.meta
-The Day of Moon/Assets/Third/Cinemachine/CinemachineExamples.unitypackage.meta
-The Day of Moon/Build.zip
+*.log
+Test Odin Inspector/Logs/shadercompiler-UnityShaderCompiler.exe0.log
