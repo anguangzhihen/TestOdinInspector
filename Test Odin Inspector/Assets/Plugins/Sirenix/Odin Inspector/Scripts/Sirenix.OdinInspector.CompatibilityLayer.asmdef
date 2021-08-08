@@ -1,0 +1,16 @@
+{
+    "name": "Sirenix.OdinInspector.CompatibilityLayer",
+    "references": [
+        "Sirenix.Utilities",
+        "Sirenix.OdinInspector.Attributes",
+        "Sirenix.Serialization",
+        "Sirenix.Serialization.Config"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "autoReferenced": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "defineConstraints": []
+}

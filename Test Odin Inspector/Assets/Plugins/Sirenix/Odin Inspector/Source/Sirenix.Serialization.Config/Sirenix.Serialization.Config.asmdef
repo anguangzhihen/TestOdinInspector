@@ -1,0 +1,14 @@
+{
+    "name": "Sirenix.Serialization.Config",
+    "references": [
+        "Sirenix.OdinInspector.Attributes",
+        "Sirenix.Utilities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "autoReferenced": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "defineConstraints": []
+}

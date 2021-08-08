@@ -1,0 +1,17 @@
+{
+    "name": "Sirenix.Utilities.Editor",
+    "references": [
+        "Sirenix.Serialization",
+        "Sirenix.Serialization.Config",
+        "Sirenix.Utilities"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "autoReferenced": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "defineConstraints": []
+}
