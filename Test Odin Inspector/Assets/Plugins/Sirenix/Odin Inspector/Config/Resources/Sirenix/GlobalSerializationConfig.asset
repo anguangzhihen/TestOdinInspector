@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b956a91e0e536f241ab095f64c874ffd, type: 3}
   m_Name: GlobalSerializationConfig
   m_EditorClassIdentifier: 
-  HideSerializationCautionaryMessage: 0
-  HidePrefabCautionaryMessage: 0
+  HideSerializationCautionaryMessage: 1
+  HidePrefabCautionaryMessage: 1
   HideOdinSerializeAttributeWarningMessages: 0
   HideNonSerializedShowInInspectorWarningMessages: 0
   buildSerializationFormat: 0
