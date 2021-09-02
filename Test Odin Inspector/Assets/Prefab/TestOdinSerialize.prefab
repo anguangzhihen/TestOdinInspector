@@ -55,6 +55,5 @@ MonoBehaviour:
     - Name: iValue
       Entry: 3
       Data: 0
-    - Name: delegate
-      Entry: 6
-      Data: 
+  iValue: 0
+  fValue: 0

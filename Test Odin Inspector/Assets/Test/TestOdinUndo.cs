@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TestOdinUndo : MonoBehaviour
 {
+    // 包裹的第二层，SerializedObject内部是序列化的数据，方便Unity处理
     private SerializedObject _serializedObject;
 
     public SerializedObject serializedObject
@@ -20,6 +21,7 @@ public class TestOdinUndo : MonoBehaviour
         }
     }
 
+    // 包裹的第一层，是个ScriptableObject
     private TestOdinUndoWrapData _testOdinUndoWrapData;
 
     private TestOdinUndoWrapData testOdinUndoWrapData
