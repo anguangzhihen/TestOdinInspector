@@ -312,6 +312,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 645346887}
+  - component: {fileID: 645346889}
+  - component: {fileID: 645346888}
   m_Layer: 0
   m_Name: TestOdinIntro
   m_TagString: Untagged
@@ -333,6 +335,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &645346888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645346886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2244a57c2438d48a8dd9c9af8a6e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &645346889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645346886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34facd72e7309ec439a5560778a99176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &747158867
 GameObject:
   m_ObjectHideFlags: 0
