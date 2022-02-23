@@ -104,10 +104,41 @@ public class TestJson1 : MonoBehaviour
 	[Button]
 	public void TestData3()
 	{
+        var data = new Data3A();
+	    var str = JsonConvert.SerializeObject(data, Formatting.Indented);
+        Debug.LogError(str);
+
+	    var dt = DataTree.Create(data);
+	    foreach (var child in dt.GetChildNodes())
+	    {
+	        if (child.refObj == data.dataB)
+	        {
+	            child.extData = "extData";
+	        }
+	    }
+
+	    JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
+	    {
+	        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+	    };
+
+        var dtStr = JsonConvert.SerializeObject(dt, Formatting.Indented, serializerSettings);
+	    Debug.LogError(dtStr);
+
+        dt = JsonConvert.DeserializeObject<DataTree>(dtStr);
+	    data = JsonConvert.DeserializeObject<Data3A>(str);
+
+        DataTree.FillTree(dt, data);
+	    foreach (var child in dt.GetChildNodes())
+	    {
+	        if (child.refObj == data.dataB)
+	        {
+	            Debug.LogError(child.extData);
+	        }
+	    }
 	}
 
-	#endregion
-
+    #endregion
 }
 
 public class DataTree
@@ -267,6 +298,7 @@ public class DataTree
 
 public class DataNode
 {
+    [JsonIgnore]
 	public DataNode parent;
 
 	public List<DataNode> children = new List<DataNode>();
