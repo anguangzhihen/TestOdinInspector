@@ -6,22 +6,27 @@ namespace AGZH
 {
 	public class CurveTool
 	{
-		public static Vector3[] GetBezierPoints(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int segment)
+		public static Vector3[] GetBezierPoints(Vector3[] points, int segment)
 		{
 			Vector3[] result = new Vector3[segment + 1];
 
 			for (int i = 0; i <= segment; i++)
 			{
 				var t = (float) i / segment;
-				var newPos = GetBezierPoint(p0, p1, p2, p3, t);
+				var newPos = GetBezierPoint(points, t);
 				result[i] = newPos;
 			}
 
 			return result;
 		}
 
-		public static Vector3 GetBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
+		public static Vector3 GetBezierPoint(Vector3[] points, float t)
 		{
+			Vector3 p0 = points[0];
+			Vector3 p1 = points[1];
+			Vector3 p2 = points[2];
+			Vector3 p3 = points[3];
+
 			float rest = (1f - t);
 			Vector3 newPos = Vector3.zero;
 			newPos += p0 * rest * rest * rest;
@@ -30,10 +35,61 @@ namespace AGZH
 			newPos += p3 * t * t * t;
 			return newPos;
 		}
+
+		public static Vector3[] GetCatmullPoints(Vector3[] points, int segment)
+		{
+			Vector3[] result = new Vector3[segment + 1];
+
+			for (int i = 0; i <= segment; i++)
+			{
+				var t = (float)i / segment;
+				var newPos = GetCatmullPoint(points, t);
+				result[i] = newPos;
+			}
+
+			return result;
+		}
+
+		public static Vector3 GetCatmullPoint(Vector3[] points, float t)
+		{
+			Vector3 a = points[0];
+			Vector3 b = points[1];
+			Vector3 c = points[2];
+			Vector3 d = points[3];
+
+			int pointCount = 4;
+			int numSections = pointCount - 3;
+			int tSec = (int)Mathf.Floor(t * numSections);
+			int currPt = numSections - 1;
+			if (currPt > tSec)
+			{
+				currPt = tSec;
+			}
+			float u = t * numSections - currPt;
+
+			return .5f * (
+				       (-a + 3f * b - 3f * c + d) * (u * u * u)
+				       + (2f * a - 5f * b + 4f * c - d) * (u * u)
+				       + (-a + c) * u
+				       + 2f * b
+			       );
+		}
+
+		public static Vector3[] CatmullPointsToBezier(Vector3[] catmull)
+		{
+			const float basis = 6f;
+			Vector3[] bezier = new Vector3[4];
+			bezier[0] = catmull[1];
+			bezier[1] = catmull[1] + (-1 * catmull[0] + catmull[2]) / basis;
+			bezier[2] = catmull[2] + (catmull[1] - catmull[3]) / basis;
+			bezier[3] = catmull[2];
+			return bezier;
+		}
 	}
 
 	public class ParametricCurve
 	{
+		// Q(t) = A * t^3 + B * t^2 + C * t^1 + D
 		public static ParametricCurve CreateByBezier(Vector3[] points)
 		{
 			ParametricCurve curve = new ParametricCurve();
@@ -42,6 +98,23 @@ namespace AGZH
 			curve.B = 3 * points[0] - 6 * points[1] + 3 * points[2];
 			curve.C = -3 * points[0] + 3 * points[1];
 			curve.D = points[0];
+			curve.arcLength = curve.GetArcLength(1f);
+			return curve;
+		}
+
+		public static ParametricCurve CreateByCatmull(Vector3[] points)
+		{
+			Vector3 a = points[0];
+			Vector3 b = points[1];
+			Vector3 c = points[2];
+			Vector3 d = points[3];
+
+			ParametricCurve curve = new ParametricCurve();
+			curve.points = points;
+			curve.A = .5f * (-a + 3f * b - 3f * c + d);
+			curve.B = .5f * (2f * a - 5f * b + 4f * c - d);
+			curve.C = .5f * (-a + c);
+			curve.D = .5f * (2f * b);
 			curve.arcLength = curve.GetArcLength(1f);
 			return curve;
 		}

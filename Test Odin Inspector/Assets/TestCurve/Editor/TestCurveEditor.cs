@@ -15,6 +15,16 @@ namespace AGZH
             script = (TestCurve)target;
 		}
 
+	    public override void OnInspectorGUI()
+	    {
+		    base.OnInspectorGUI();
+
+		    if (GUILayout.Button("CatmullToBezier"))
+		    {
+			    script.ToBezier();
+		    }
+	    }
+
 	    void OnSceneGUI()
 	    {
 		    float size = 0f;
@@ -38,14 +48,29 @@ namespace AGZH
 			Handles.color = color;
 		    Vector3[] drawPoints = null;
 
-			if (script.uniformSpeedDraw)
+		    if (script.mode == CurveMode.Bezier)
 		    {
-				var paramCurve = ParametricCurve.CreateByBezier(new Vector3[] { script.point1, script.controlPoint1, script.controlPoint2, script.point2 });
-			    drawPoints = paramCurve.GetPointsByS(script.segment);
-		    }
-			else
+				if (script.uniformSpeedDraw)
+				{
+					var paramCurve = ParametricCurve.CreateByBezier(script.bezierPoints);
+					drawPoints = paramCurve.GetPointsByS(script.segment);
+				}
+				else
+				{
+					drawPoints = CurveTool.GetBezierPoints(script.bezierPoints, script.segment);
+				}
+			}
+		    else
 		    {
-				drawPoints = CurveTool.GetBezierPoints(script.point1, script.controlPoint1, script.controlPoint2, script.point2, script.segment);
+			    if (script.uniformSpeedDraw)
+				{
+					var paramCurve = ParametricCurve.CreateByCatmull(script.catmullPoints);
+					drawPoints = paramCurve.GetPointsByS(script.segment);
+				}
+			    else
+			    {
+				    drawPoints = CurveTool.GetCatmullPoints(script.catmullPoints, script.segment);
+				}
 			}
 
 		    for (int i = 0; i < drawPoints.Length - 1; i++)
