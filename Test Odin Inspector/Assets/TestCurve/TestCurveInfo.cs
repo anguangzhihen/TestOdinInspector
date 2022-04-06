@@ -96,12 +96,6 @@ public class TestCurveInfo : MonoBehaviour
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 100000: len = " + length + ", time = " + time);
 
-		cat.Start();
-		polylineCurve.segments = 1000000;
-		length = polylineCurve.GetLength();
-		time = cat.GetTotalSeconds();
-		Debug.LogError("Polyline 1000000: len = " + length + ", time = " + time);
-
 		ParametricCurve parametricCurve = null;
 		if (mode == CurveMode.Bezier)
 		{
@@ -112,11 +106,30 @@ public class TestCurveInfo : MonoBehaviour
 			parametricCurve = ParametricCurve.CreateByCatmull(testCurve.catmullPoints);
 		}
 
-		cat.Start();
+	    cat.Start();
+	    parametricCurve.gaussWX = CurveTool.gaussWX5;
+	    length = parametricCurve.GetArcLength(1f);
+	    time = cat.GetTotalSeconds();
+	    Debug.LogError("Parametric 5: len = " + length + ", time = " + time);
+
+        cat.Start();
+	    parametricCurve.gaussWX = CurveTool.gaussWX10;
 		length = parametricCurve.GetArcLength(1f);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Parametric 10: len = " + length + ", time = " + time);
-	}
+
+	    cat.Start();
+	    parametricCurve.gaussWX = CurveTool.gaussWX15;
+        length = parametricCurve.GetArcLength(1f);
+	    time = cat.GetTotalSeconds();
+	    Debug.LogError("Parametric 15: len = " + length + ", time = " + time);
+
+	    cat.Start();
+	    parametricCurve.gaussWX = CurveTool.gaussWX20;
+	    length = parametricCurve.GetArcLength(1f);
+	    time = cat.GetTotalSeconds();
+	    Debug.LogError("Parametric 20: len = " + length + ", time = " + time);
+    }
 }
 
 public class TimeCatch

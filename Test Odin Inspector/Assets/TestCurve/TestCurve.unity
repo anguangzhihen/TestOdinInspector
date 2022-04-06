@@ -177,9 +177,9 @@ MonoBehaviour:
   uniformSpeedDraw: 1
   mode: 0
   point1: {x: 2.5637171, y: 0, z: -2.3825607}
-  controlPoint1: {x: 4.544871, y: 0, z: 6.2551045}
-  controlPoint2: {x: -10.719059, y: 0, z: 10.069241}
-  point2: {x: -8.71834, y: 0, z: 1.2306309}
+  controlPoint1: {x: 51.902878, y: 0, z: 14.118984}
+  controlPoint2: {x: -109.49244, y: 0, z: 50.061134}
+  point2: {x: -11.302628, y: 0, z: 0.9512806}
 --- !u!65 &172418317
 BoxCollider:
   m_ObjectHideFlags: 0
