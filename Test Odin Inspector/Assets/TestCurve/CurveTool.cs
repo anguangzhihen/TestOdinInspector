@@ -259,6 +259,16 @@ namespace AGZH
 			return t;
 		}
 
+		public float[] SToTs(float[] sArr)
+		{
+			float[] result = new float[sArr.Length];
+			for (int i = 0; i < sArr.Length; i++)
+			{
+				result[i] = S2T(sArr[i]);
+			}
+			return result;
+		}
+
 		public Vector3 GetPointByS(float s)
 		{
 			var t = S2T(s);
