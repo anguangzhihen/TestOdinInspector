@@ -174,12 +174,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentSphere: 1
   segment: 50
-  uniformSpeedDraw: 1
+  uniformSpeedDraw: 0
   mode: 0
-  point1: {x: 2.5637171, y: 0, z: -2.3825607}
-  controlPoint1: {x: 51.902878, y: 0, z: 14.118984}
-  controlPoint2: {x: -109.49244, y: 0, z: 50.061134}
-  point2: {x: -11.302628, y: 0, z: 0.9512806}
+  point1: {x: -27.178802, y: 0, z: -6.9415336}
+  controlPoint1: {x: -162.82532, y: 0, z: -37.3775}
+  controlPoint2: {x: 47.67216, y: -23.909634, z: 41.14436}
+  point2: {x: -40.23963, y: 0, z: 6.496805}
 --- !u!65 &172418317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172418314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.51, y: 0, z: -3.03}
+  m_LocalPosition: {x: 51.3, y: 0, z: -84.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

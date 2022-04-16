@@ -173,6 +173,7 @@ public class TestCurveInfo : MonoBehaviour
 		float[] testS = PolylineCurve.Random(101);
 
 		StringBuilder tsResult = new StringBuilder();
+		StringBuilder lengthResult = new StringBuilder();
 
 		var mode = CurveMode.Bezier;
 		var polylineCurve = new PolylineCurve();
@@ -197,48 +198,58 @@ public class TestCurveInfo : MonoBehaviour
 		float[] ts = null;
 
 		cat.Start();
-		polylineCurve.Calc();
+		for (int i = 0; i < 100; i++)
+			polylineCurve.Calc();
 		length = polylineCurve.length;
-		ts = polylineCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 10: len = " + length + ", time = " + time);
+		ts = polylineCurve.SToTs(testS);
 		tsResult.Append("Polyline 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Polyline 10,").Append(length).Append(",").Append(time).Append("\n");
 
 		cat.Start();
 		polylineCurve.segments = 100;
-		polylineCurve.Calc();
+		for (int i = 0; i < 100; i++)
+			polylineCurve.Calc();
 		length = polylineCurve.length;
-		ts = polylineCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 100: len = " + length + ", time = " + time);
+		ts = polylineCurve.SToTs(testS);
 		tsResult.Append("Polyline 100,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Polyline 100,").Append(length).Append(",").Append(time).Append("\n");
 
 		cat.Start();
 		polylineCurve.segments = 1000;
-		polylineCurve.Calc();
+		for (int i = 0; i < 100; i++)
+			polylineCurve.Calc();
 		length = polylineCurve.length;
-		ts = polylineCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 1000: len = " + length + ", time = " + time);
+		ts = polylineCurve.SToTs(testS);
 		tsResult.Append("Polyline 1000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Polyline 1000,").Append(length).Append(",").Append(time).Append("\n");
 
 		cat.Start();
 		polylineCurve.segments = 10000;
-		polylineCurve.Calc();
+		for (int i = 0; i < 100; i++)
+			polylineCurve.Calc();
 		length = polylineCurve.length;
-		ts = polylineCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 10000: len = " + length + ", time = " + time);
+		ts = polylineCurve.SToTs(testS);
 		tsResult.Append("Polyline 10000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Polyline 10000,").Append(length).Append(",").Append(time).Append("\n");
 
 		cat.Start();
 		polylineCurve.segments = 100000;
-		polylineCurve.Calc();
+		for (int i = 0; i < 100; i++)
+			polylineCurve.Calc();
 		length = polylineCurve.length;
-		ts = polylineCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Polyline 100000: len = " + length + ", time = " + time);
+		ts = polylineCurve.SToTs(testS);
 		tsResult.Append("Polyline 100000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Polyline 100000,").Append(length).Append(",").Append(time).Append("\n");
 
 		ParametricCurve parametricCurve = null;
 		if (mode == CurveMode.Bezier)
@@ -251,14 +262,16 @@ public class TestCurveInfo : MonoBehaviour
 		}
 		var tsInfo = new TsInfo(parametricCurve);
 
-		cat.Start();
 	    parametricCurve.gaussWX = CurveTool.gaussWX5;
-	    length = parametricCurve.GetArcLength(1f);
+		cat.Start();
+		for (int i = 0; i < 100; i++)
+			length = parametricCurve.GetArcLength(1f);
 		parametricCurve.arcLength = length;
-		ts = parametricCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
-	    Debug.LogError("Parametric 5: len = " + length + ", time = " + time);
+		Debug.LogError("Parametric 5: len = " + length + ", time = " + time);
+		ts = parametricCurve.SToTs(testS);
 		tsResult.Append("Parametric 5,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Parametric 5,").Append(length).Append(",").Append(time).Append("\n");
 
 		tsInfo.Calc(10); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 5 segments 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
@@ -269,14 +282,16 @@ public class TestCurveInfo : MonoBehaviour
 		tsInfo.Calc(10000); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 5 segments 10000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
 
-		cat.Start();
 	    parametricCurve.gaussWX = CurveTool.gaussWX10;
-		length = parametricCurve.GetArcLength(1f);
+		cat.Start();
+		for (int i = 0; i < 100; i++)
+			length = parametricCurve.GetArcLength(1f);
 		parametricCurve.arcLength = length;
-		ts = parametricCurve.SToTs(testS);
 		time = cat.GetTotalSeconds();
 		Debug.LogError("Parametric 10: len = " + length + ", time = " + time);
+		ts = parametricCurve.SToTs(testS);
 		tsResult.Append("Parametric 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Parametric 10,").Append(length).Append(",").Append(time).Append("\n");
 
 		tsInfo.Calc(10); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 10 segments 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
@@ -287,14 +302,16 @@ public class TestCurveInfo : MonoBehaviour
 		tsInfo.Calc(10000); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 10 segments 10000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
 
-		cat.Start();
 	    parametricCurve.gaussWX = CurveTool.gaussWX15;
-        length = parametricCurve.GetArcLength(1f);
+		cat.Start();
+		for (int i = 0; i < 100; i++)
+			length = parametricCurve.GetArcLength(1f);
 		parametricCurve.arcLength = length;
-		ts = parametricCurve.SToTs(testS);
-	    time = cat.GetTotalSeconds();
+		time = cat.GetTotalSeconds();
 		Debug.LogError("Parametric 15: len = " + length + ", time = " + time);
+		ts = parametricCurve.SToTs(testS);
 		tsResult.Append("Parametric 15,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Parametric 15,").Append(length).Append(",").Append(time).Append("\n");
 
 		tsInfo.Calc(10); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 15 segments 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
@@ -305,14 +322,16 @@ public class TestCurveInfo : MonoBehaviour
 		tsInfo.Calc(10000); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 15 segments 10000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
 
-		cat.Start();
 	    parametricCurve.gaussWX = CurveTool.gaussWX20;
-	    length = parametricCurve.GetArcLength(1f);
+		cat.Start();
+		for (int i = 0; i < 100; i++)
+			length = parametricCurve.GetArcLength(1f);
 		parametricCurve.arcLength = length;
-		ts = parametricCurve.SToTs(testS);
-	    time = cat.GetTotalSeconds();
+		time = cat.GetTotalSeconds();
 		Debug.LogError("Parametric 20: len = " + length + ", time = " + time);
+		ts = parametricCurve.SToTs(testS);
 		tsResult.Append("Parametric 20,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
+		lengthResult.Append("Parametric 20,").Append(length).Append(",").Append(time).Append("\n");
 
 		tsInfo.Calc(10); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 20 segments 10,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
@@ -323,7 +342,8 @@ public class TestCurveInfo : MonoBehaviour
 		tsInfo.Calc(10000); ts = tsInfo.SToTs(testS);
 		tsResult.Append("Parametric 20 segments 10000,").Append(CalcVariance(tsStandard, ts)).Append(",").Append(ArrayString(ts, true)).Append("\n");
 
-		File.WriteAllText("D://test.csv", tsResult.ToString());
+		File.WriteAllText("D://Result_TS.csv", tsResult.ToString());
+		File.WriteAllText("D://Result_Length.csv", lengthResult.ToString());
     }
 
 	public string ArrayString(float[] ts, bool noBrackets = false)
