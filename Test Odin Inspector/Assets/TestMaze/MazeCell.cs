@@ -47,7 +47,7 @@ public class MazeCell : MonoBehaviour
 	{
 		if (edges[(int) direction] != null)
 		{
-			throw new System.InvalidOperationException("MazeCell has edge " + direction);
+			throw new System.InvalidOperationException("MazeCell has edge " + direction + ", cor = " + coordinates);
 		}
 		edges[(int)direction] = edge;
 		initializedEdgeCount += 1;

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum MazeDirection
 {
@@ -56,5 +58,17 @@ public static class MazeDirections
 	public static Quaternion ToRotation(this MazeDirection direction)
 	{
 		return rotations[(int)direction];
+	}
+
+	public static MazeDirection ToDirection(this Vector2Int cor)
+	{
+		for (int i = 0; i < vectors.Length; i++)
+		{
+			if (vectors[i] == cor)
+			{
+				return (MazeDirection) i;
+			}
+		}
+		throw new Exception("No this direction");
 	}
 }
