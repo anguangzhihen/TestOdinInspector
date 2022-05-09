@@ -339,13 +339,13 @@ public class WilsonProcess : MazeProcess
 			var startPoint = RandomStartPoint();
 			List<Vector2Int> paths = RandomWalk(startPoint);
 
-			StringBuilder sb = new StringBuilder();
-			foreach (var p in paths)
-			{
-				sb.Append(p);
-				sb.Append(" | ");
-			}
-			Debug.LogError(sb);
+			//StringBuilder sb = new StringBuilder();
+			//foreach (var p in paths)
+			//{
+			//	sb.Append(p);
+			//	sb.Append(" | ");
+			//}
+			//Debug.LogError(sb);
 
 			// ´´½¨Â·¾¶
 			MazeCell finalCell = maze.GetCell(paths[paths.Count - 1]);
