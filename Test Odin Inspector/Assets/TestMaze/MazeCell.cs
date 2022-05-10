@@ -43,6 +43,18 @@ public class MazeCell : MonoBehaviour
 		return edges[(int)direction];
 	}
 
+	public void RemoveEdge(MazeDirection direction)
+	{
+		if (edges[(int) direction] == null)
+		{
+			return;
+		}
+
+		GameObject.DestroyImmediate(edges[(int)direction].gameObject);
+		edges[(int) direction] = null;
+		initializedEdgeCount -= 1;
+	}
+
 	public void SetEdge(MazeDirection direction, MazeCellEdge edge)
 	{
 		if (edges[(int) direction] != null)

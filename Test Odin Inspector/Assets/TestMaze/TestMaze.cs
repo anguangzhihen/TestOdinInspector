@@ -90,12 +90,21 @@ public class TestMaze : MonoBehaviour
 		}
 	}
 
+	public void RemoveEdge(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+	{
+		cell.RemoveEdge(direction);
+		if (otherCell != null)
+		{
+			otherCell.RemoveEdge(direction.GetOpposite());
+		}
+	}
+
 }
 
 public abstract class MazeProcess
 {
 	// 当时使用的算法
-	public static MazeProcess currentMazeProcess = new WilsonProcess();
+	public static MazeProcess currentMazeProcess = new EllerProcess();
 
 	public static MazeProcess GetCurrentMazeProcess(TestMaze maze)
 	{
@@ -447,4 +456,213 @@ public class WilsonProcess : MazeProcess
 		return paths;
 	}
 }
+
+public class EllerProcess : MazeProcess
+{
+	public override IEnumerator Process()
+	{
+		WaitForSeconds delay = new WaitForSeconds(maze.generationStepDelay);
+
+		int[] sets0 = new int[maze.size.x];
+		int[] sets1 = new int[maze.size.x];
+
+		ResetIntArray(sets0);
+		ResetIntArray(sets1);
+
+		// 初始化第一行
+		int nowY = 0;
+		int groupIdMax = 10;
+		for (int i = 0; i < maze.size.x; i++)
+		{
+			sets0[i] = groupIdMax++;
+		}
+
+		// 创建第一行Cell
+		CreateCellByRow(nowY);
+		CreateWallByRow(nowY);
+		for (int i = 0; i < sets0.Length; i++)
+		{
+			var cell = maze.GetCell(new Vector2Int(i, nowY));
+			maze.CreateWall(cell, null, MazeDirection.South);
+		}
+
+		while (true)
+		{
+			// 随机合并集合
+			for (int i = 0; i < sets0.Length - 1; i++)
+			{
+				var value = sets0[i];
+				if (sets0[i] == sets0[i + 1])
+				{
+					continue;
+				}
+
+				// 尝试合并邻居，最后一行合并所有邻居
+				if (nowY == maze.size.y - 1 || Random.value >= 0.5f)
+				{
+					int targetValue = sets0[i + 1];
+					for (int j = 0; j < sets0.Length; j++)
+					{
+						if (sets0[j] == targetValue)
+						{
+							sets0[j] = value;
+						}
+					}
+					for (int j = 0; j < sets1.Length; j++)
+					{
+						if (sets1[j] == targetValue)
+						{
+							sets1[j] = value;
+						}
+					}
+
+					yield return delay;
+					// 砸墙
+					maze.RemoveEdge(maze.GetCell(new Vector2Int(i, nowY)), maze.GetCell(new Vector2Int(i + 1, nowY)), MazeDirection.East);
+					maze.CreatePassage(maze.GetCell(new Vector2Int(i, nowY)), maze.GetCell(new Vector2Int(i + 1, nowY)), MazeDirection.East);
+				}
+			}
+
+			nowY++;
+			if (nowY >= maze.size.y)
+			{
+				break;
+			}
+
+			// 随机向下至少延伸一格
+			ResetIntArray(sets1);
+
+			var groupId2CorX = GetGroupIdToCorX(sets0);
+			foreach (var pair in groupId2CorX)
+			{
+				var groupId = pair.Key;
+				var corXs = pair.Value;
+
+				RandomSet(corXs);
+				var count = Random.Range(1, corXs.Count + 1);
+				//var count = 1;
+				for (int i = 0; i < count; i++)
+				{
+					var x = corXs[i];
+					sets1[x] = groupId;
+				}
+			}
+
+			// 补齐没有延伸的格子
+			for (int i = 0; i < sets1.Length; i++)
+			{
+				if (sets1[i] == 0)
+				{
+					sets1[i] = groupIdMax++;
+				}
+			}
+
+			// 创建下一行Cell和竖墙，需要注意的是这边先创建好竖墙，然后再融合邻居的步骤中砸开墙
+			CreateCellByRow(nowY);
+			CreateWallByRow(nowY);
+			for (int i = 0; i < sets1.Length; i++)
+			{
+				var cell = maze.GetCell(new Vector2Int(i, nowY));
+
+				// 创建横向的墙和通道
+				if (sets0[i] == sets1[i])
+				{
+					maze.CreatePassage(cell, maze.GetCell(new Vector2Int(i, nowY - 1)), MazeDirection.South);
+				}
+				else
+				{
+					yield return delay;
+					maze.CreateWall(cell, maze.GetCell(new Vector2Int(i, nowY - 1)), MazeDirection.South);
+				}
+			}
+
+			//StringBuilder sb = new StringBuilder();
+			//sb.Clear();
+			//for (int i = 0; i < sets1.Length; i++)
+			//{
+			//	sb.Append(sets1[i]);
+			//	sb.Append(" | ");
+			//}
+			//sb.Append("\n");
+			//for (int i = 0; i < sets0.Length; i++)
+			//{
+			//	sb.Append(sets0[i]);
+			//	sb.Append(" | ");
+			//}
+			//Debug.LogError(sb.ToString());
+
+			// 准备下一个循环
+			var tmp = sets0;
+			sets0 = sets1;
+			sets1 = tmp;
+		}
+
+		// 补最后的墙
+		for (int i = 0; i < maze.size.x; i++)
+		{
+			yield return delay;
+			var cell = maze.GetCell(new Vector2Int(i, maze.size.y - 1));
+			maze.CreateWall(cell, null, MazeDirection.North);
+		}
+	}
+
+	private void ResetIntArray(int[] arr)
+	{
+		for (int i = 0; i < arr.Length; i++)
+		{
+			arr[i] = 0;
+		}
+	}
+
+
+	private void CreateCellByRow(int y)
+	{
+		for (int i = 0; i < maze.size.x; i++)
+		{
+			maze.CreateCell(new Vector2Int(i, y));
+		}
+	}
+
+	private void CreateWallByRow(int y)
+	{
+		maze.CreateWall(maze.GetCell(new Vector2Int(0, y)), null, MazeDirection.West);
+		for (int i = 0; i < maze.size.x; i++)
+		{
+			var cell1 = maze.GetCell(new Vector2Int(i, y));
+			var cell2 = maze.GetCell(new Vector2Int(i + 1, y));
+			maze.CreateWall(cell1, cell2, MazeDirection.East);
+		}
+	}
+
+	private Dictionary<int, List<int>> GetGroupIdToCorX(int[] sets)
+	{
+		// 直接返回一个Dictionary，可能不是很好
+		Dictionary<int, List<int>> result = new Dictionary<int, List<int>>();
+		for (int i = 0; i < sets.Length; i++)
+		{
+			var groupId = sets[i];
+
+			List<int> corXs = null;
+			if (!result.TryGetValue(groupId, out corXs))
+			{
+				corXs = new List<int>();
+				result[groupId] = corXs;
+			}
+			corXs.Add(i);
+		}
+		return result;
+	}
+
+	private void RandomSet(List<int> set)
+	{
+		for (int i = 0; i < set.Count - 1; i++)
+		{
+			int index = Random.Range(i, set.Count);
+			var tmp = set[index];
+			set[index] = set[i];
+			set[i] = tmp;
+		}
+	}
+} 
+
 
