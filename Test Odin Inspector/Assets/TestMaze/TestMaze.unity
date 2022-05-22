@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 10, y: 10}
-  generationStepDelay: 0.1
+  generationStepDelay: 0.01
   cellPrefab: {fileID: 7170170249641760221, guid: 3e1b3ec83ea94b14d9291cc4acf32a51, type: 3}
   passagePrefab: {fileID: 150942267911196260, guid: 05f2eccf450289a4a873ec53cc9de111, type: 3}
   wallPrefab: {fileID: -6755724388129198607, guid: 47250ae5f2fcb914999b4c94f34e2b9e, type: 3}
