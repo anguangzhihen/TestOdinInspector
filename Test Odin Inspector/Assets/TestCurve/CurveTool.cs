@@ -192,7 +192,7 @@ namespace AGZH
 		public Vector3 D;
 		public float arcLength = 0f;
 
-		// Gauss-lengendreÈ¨ÖØ±í https://pomax.github.io/bezierinfo/legendre-gauss.html
+		// Gauss-lengendreæƒé‡è¡¨ https://pomax.github.io/bezierinfo/legendre-gauss.html
 		public float[][] gaussWX =
 		{
 			new []{ 0.2955242247147529f, -0.1488743389816312f },
@@ -207,19 +207,19 @@ namespace AGZH
 			new []{ 0.0666713443086881f, 0.9739065285171717f },
 		};
 
-		// ÇúÏß¹«Ê½
+		// æ›²çº¿å…¬å¼
 		public Vector3 GetPoint(float t)
 		{
 			return A * t * t * t + B * t * t + C * t + D;
 		}
 
-		// ÇúÏß¹«Ê½Ò»½×µ¼Êı
+		// æ›²çº¿å…¬å¼ä¸€é˜¶å¯¼æ•°
 		public Vector3 GetPointDer(float t)
 		{
 			return 3f * A * t * t + 2f * B * t + C;
 		}
 
-		// »ñÈ¡²ÎÊı³¤¶È
+		// è·å–å‚æ•°é•¿åº¦
 		public float GetArcLength(float t)
 		{
 			var halfT = t / 2f;
@@ -251,7 +251,7 @@ namespace AGZH
 
 			s = Mathf.Clamp01(s);
 			float t = s;
-			// Å£¶Ùµü´ú·¨
+			// ç‰›é¡¿è¿­ä»£æ³•
 			for (int i = 0; i < NEWTON_SEGMENT; i++)
 			{
 				t = t - (T2S(t) - s) / T2SDer(t);
