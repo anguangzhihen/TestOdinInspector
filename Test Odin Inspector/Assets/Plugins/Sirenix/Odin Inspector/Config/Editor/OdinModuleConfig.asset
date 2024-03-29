@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e8b3654c25673c4d86eb4e6f18a5b31, type: 3}
   m_Name: OdinModuleConfig
   m_EditorClassIdentifier: 
-  configurations: []
-  ModuleTogglingSettings: 0
+  configurations:
+  - ID: Unity.Mathematics
+    ActivationSettings: 0
+  ModuleTogglingSettings: 1
   ModuleUpdateSettings: 0

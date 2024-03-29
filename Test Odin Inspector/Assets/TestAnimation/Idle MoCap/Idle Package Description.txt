@@ -1,0 +1,27 @@
+Idle MoCap
+
+This package features a collection of 11 fbx idle animations for a bipedal humanoid character performing various subtle idle movements.
+
+Idle Stance 1: Standing still, breathing normally, looking straight ahead
+
+Idle Stance 2: Alternate standing still, breathing normally, looking straight ahead
+
+Looking Around 1:  Looking from side to side while stationary
+
+Looking Around 2: Looking from side to side as well as upward while stationary
+
+Looking Around Holding Object: Looking from side to side and behind with object in hands while stationary
+
+Cold Idle 1: Shivering and rubbing hands together while stationary
+
+Cold Idle 2: Shivering and breathing on hands for warmth while stationary
+
+Cold Idle 3: Shivering and wrapping arms around self while stationary
+
+Cold Idle 4: Shivering and warming hands by a fire while stationary
+
+Coughing Idle: Coughing while stationary
+
+Greeting Stance: Nodding head in greeting while stationary to the left right and straight ahead 
+
+If you have any questions feel free to contact us at support@morromotion.com
